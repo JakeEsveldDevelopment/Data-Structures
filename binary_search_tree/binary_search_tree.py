@@ -1,7 +1,7 @@
 import sys
-sys.path.append('../queue_and_stack')
-from dll_queue import Queue
-from dll_stack import Stack
+#sys.path.append('../queue_and_stack')
+#from dll_queue import Queue
+#from dll_stack import Stack
 
 class BinarySearchTree:
   def __init__(self, value):
@@ -10,13 +10,43 @@ class BinarySearchTree:
     self.right = None
 
   def insert(self, value):
-    pass
+    if self.value is None:
+      self.value = value
+    else:
+      if self.value > value:
+        if self.left is None:
+          self.left = BinarySearchTree(value)
+        else:
+          self.left.insert(value)
+      else:
+        if self.right is None:
+          self.right = BinarySearchTree(value)
+        else:
+          self.right.insert(value)
 
   def contains(self, target):
-    pass
+    if self.value is None or self.value == target:
+      return self.value
+    elif self.value > target:
+      if self.left is None:
+        return None
+      return self.left.contains(target)
+    else:
+      if self.right is None:
+        return None
+      return self.right.contains(target)
 
   def get_max(self):
-    pass
+    if self.right is None:
+      return self.value
+    else:
+      return self.right.get_max()
 
   def for_each(self, cb):
-    pass
+    cb(self.value)
+
+    if self.right != None:
+      self.right.for_each(cb)
+      
+    if self.left != None:
+      self.left.for_each(cb)
